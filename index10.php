@@ -1,12 +1,5 @@
 <?php
-require 'BladeOne.php'; 
-
-use eftec\bladeone\BladeOne;
-
-$views = __DIR__ . '/views';  
-$cache = __DIR__ . '/cache';  
-$blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
-
+require_once 'setup.php';
 $host = 'localhost';
 $user = 'root';
 $password = '1234';
@@ -16,7 +9,6 @@ $conn = new mysqli($host, $user, $password, $database);
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
-
 $sql = "SELECT * FROM rooms";
 $result = $conn->query($sql);
 
@@ -25,7 +17,5 @@ if ($result->num_rows > 0) {
     $rooms = $result->fetch_all(MYSQLI_ASSOC);
 }
 $conn->close();
-
-
 echo $blade->run("rooms", ["rooms" => $rooms]);
 ?>
